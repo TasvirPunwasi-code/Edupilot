@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/EditMarks.css') }}">
+
+<title>Edit Marks - EduPilot</title>
+</head>
+
+<body>
+
+<div class="side">
+
+    <h2>EduPilot</h2>
+
+    <nav>
+        <ul>
+
+            <li>
+                <a href="/teacher/dashboard">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/teacher/capture-marks">Capture Marks</a>
+            </li>
+
+            <li>
+                <a href="/teacher/edit-marks">Edit Marks</a>
+            </li>
+
+            <li>
+                <a href="/teacher/students">View Students</a>
+            </li>
+
+            
+            <li>
+                <a href="/teacher/analytics">Analytics</a>
+            </li>
+
+            <li>
+                <a href="/teacher/chatbot">Chatbot</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <button class="logout" onclick="window.location.href='/logout'">
+        Logout
+    </button>
+
+</div>
+
+
+<div class="main-content">
+
+<header class="top-bar">
+
+    <div class="welcome">
+        <h2>👋 Welcome, {{ user_name }}</h2>
+    </div>
+
+    <div class="top-right">
+
+        <button class="notification">🔔</button>
+
+        <input type="text" id="searchStudent" placeholder="🔍 Search Student">
+
+        <div class="profile">
+            👤 {{ user_name }} - {{ user_role|capitalize }}
+        </div>
+
+    </div>
+
+</header>
+
+
+<br>
+
+<h1>Edit Marks</h1>
+
+<br>
+
+
+<div class="edit-container">
+
+    <div class="filters">
+
+        <div class="filter-group">
+
+            <label for="classSelect">Class</label>
+
+            <select id="classSelect">
+                <option value="">Select Class</option>
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="subjectSelect">Subject</label>
+
+            <select id="subjectSelect">
+                <option value="">Select Subject</option>
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="assessmentSelect">Assessment Type</label>
+
+            <select id="assessmentSelect">
+
+                <option value="">Select Assessment</option>
+                <option value="Test 1">Test 1</option>
+                <option value="Assignment">Assignment</option>
+                <option value="Exam">Exam</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+            <label for="termSelect">Term</label>
+
+            <select id="termSelect">
+
+                <option value="">Select Term</option>
+                <option value="1">Term 1</option>
+                <option value="2">Term 2</option>
+                <option value="3">Term 3</option>
+                <option value="4">Term 4</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Student</th>
+                <th>Student Number</th>
+                <th>Current Mark</th>
+                <th>New Mark</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody id="marksTable">
+
+            <tr>
+                <td colspan="5">
+                    Select class, subject, assessment and term to load marks.
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <div class="buttons">
+
+        <button class="save-btn" id="saveMarks">
+            Save All Changes
+        </button>
+
+    </div>
+
+
+    <p id="editMessage"></p>
+
+</div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/EditMarks.js') }}"></script>
+
+</body>
+
+</html>

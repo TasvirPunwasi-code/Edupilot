@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/TeacherDashboard.css')}}">
+    <title>Teachers Dashboard - EduPilot</title>
+</head>
+<body>
+    <div class="side">
+        <h2>EduPilot</h2>
+        <nav>
+        <ul>
+            <li>Dashboard</li>
+            <li><a href="/teacher/capture-marks">Capture Marks</a></li>
+            <li><a href="/teacher/edit-marks">Edit Marks</a></li>
+            <li><a href="/teacher/students">View Students</a></li>
+            <li><a href="/teacher/analytics">Analytics</a></li>
+            <li><a href="/teacher/chatbot">Chatbot</a></li>
+        </ul>
+        </nav>
+
+        <button class="logout" onclick="window.location.href='/logout'">Logout</button>
+    </div>
+
+    <div class="main-content">
+
+    <header class="top-bar">
+
+        <div class="welcome">
+            <h2>👋 Welcome, {{ user_name }}</h2>
+        </div>
+
+        <div class="top-right">
+
+            <button class="notification">🔔</button>
+
+            <input type="text" placeholder="🔍 Search">
+
+            <div class="profile">
+                👤 Profile {{ user_name }} - {{user_role|capitalize}}
+            </div>
+
+        </div>
+
+    </header>
+    <br>
+    <br>
+    <h1>Teachers Dashboard</h1>
+    <br>
+    <br>
+    <div class="dashboard-cards">
+
+    <div class="card">
+        <h3>👨‍🎓 Students</h3>
+        <p>120</p>
+    </div>
+
+    <div class="card">
+        <h3>📚 Classes</h3>
+        <p>6</p>
+    </div>
+
+    <div class="card">
+        <h3>📊 Avg Marks</h3>
+        <p>74%</p>
+    </div>
+
+    <div class="card">
+        <h3>📅 Attendance</h3>
+        <p>93%</p>
+    </div>
+
+</div>
+<br>
+<br>
+
+<div class="dashboard-row">
+
+    <div class="calendar-container">
+
+        <div class="calendar-header">
+
+            <button id="prev">&#10094;</button>
+
+            <h2 id="monthYear"></h2>
+
+            <button id="next">&#10095;</button>
+
+        </div>
+
+        <div class="weekdays">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+
+        <div class="days" id="days"></div>
+
+    </div>
+
+    <div class="today-events">
+
+        <h2>Upcoming Events</h2>
+
+        <ul id="eventList">
+            <li>No events today.</li>
+        </ul>
+
+    </div>
+
+</div>
+
+
+
+<script src="TeachersDashboard.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>View Students - EduPilot</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ViewStudents.css') }}">
+</head>
+
+<body>
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div class="side">
+
+    <h2>EduPilot</h2>
+
+    <nav>
+        <ul>
+
+            <li>
+                <a href="/teacher/dashboard">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/teacher/capture-marks">Capture Marks</a>
+            </li>
+
+            <li>
+                <a href="/teacher/edit-marks">Edit Marks</a>
+            </li>
+
+            <li>
+                <a href="/teacher/students" class="active">View Students</a>
+            </li>
+
+            <li>
+                <a href="/teacher/analytics">Analytics</a>
+            </li>
+
+            <li>
+                <a href="/teacher/chatbot">Chatbot</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <button class="logout" onclick="window.location.href='/logout'">Logout</button>
+
+</div>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<div class="main-content">
+
+    <header class="top-bar">
+
+        <div class="welcome">
+            <h2>👋 Welcome, {{ user_name }}</h2>
+        </div>
+
+        <div class="top-right">
+
+            <button class="notification">🔔</button>
+
+            <input type="text" id="topSearch" placeholder="🔍 Search">
+
+            <div class="profile">
+                👤 {{ user_name }} - {{ user_role|capitalize }}
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <h1>View Students</h1>
+
+
+    <div class="students-container">
+
+        <!-- =================================================
+             FILTERS
+        ================================================== -->
+
+        <div class="students-toolbar">
+
+            <div class="filters">
+
+                <div class="filter-group">
+
+                    <label for="classFilter">Class</label>
+
+                    <select id="classFilter">
+                        <option value="">All My Classes</option>
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label for="searchStudent">Search Student</label>
+
+                    <input type="text" id="searchStudent" placeholder="Enter student name...">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="results-count" id="resultsCount"></p>
+
+
+        <!-- =================================================
+             STUDENT TABLE
+        ================================================== -->
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Student</th>
+                    <th>Class</th>
+                    <th>Performance Status</th>
+                    <th>Current Average</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody id="studentsTableBody">
+
+                <tr>
+                    <td colspan="5">Loading students...</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+
+        <p class="no-results" id="noResults" style="display:none;">
+            No students match your search.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     STUDENT DETAILS MODAL
+========================================================= -->
+
+<div class="modal-overlay" id="studentModal">
+
+    <div class="modal-box">
+
+        <button class="modal-close" id="modalClose">&times;</button>
+
+
+        <div class="modal-header">
+
+            <div class="avatar-circle" id="modalAvatar"></div>
+
+            <div>
+                <h2 id="modalName"></h2>
+                <p id="modalClass"></p>
+            </div>
+
+        </div>
+
+
+        <div class="modal-info-row">
+            <span>Student Number</span>
+            <span id="modalStudentNumber"></span>
+        </div>
+
+
+        <div class="modal-info-row">
+            <span>Performance Status</span>
+            <span id="modalStatus"></span>
+        </div>
+
+
+        <div class="modal-info-row">
+            <span>Current Average</span>
+            <span id="modalAverage"></span>
+        </div>
+
+
+        <!-- =================================================
+             MARKS BREAKDOWN
+        ================================================== -->
+
+        <div id="modalMarksSection">
+
+            <p class="modal-marks-title">Marks Breakdown</p>
+
+            <div id="subjectBreakdown"></div>
+            <div class="mini-bar-row">
+
+                <div class="mini-bar-label">
+                    <span>Test</span>
+                    <span id="testLabel">--</span>
+                </div>
+
+                <div class="mini-bar-track">
+                    <div class="mini-bar-fill" id="testBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+
+            <div class="mini-bar-row">
+
+                <div class="mini-bar-label">
+                    <span>Assignment</span>
+                    <span id="assignmentLabel">--</span>
+                </div>
+
+                <div class="mini-bar-track">
+                    <div class="mini-bar-fill" id="assignmentBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+
+           
+
+
+            <div class="mini-bar-row">
+
+                <div class="mini-bar-label">
+                    <span>Exam</span>
+                    <span id="examLabel">--</span>
+                </div>
+
+                <div class="mini-bar-track">
+                    <div class="mini-bar-fill" id="examBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p id="noMarksMessage" style="display:none; color:gray; margin-top:15px;">
+            No marks have been captured for this student yet.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/ViewStudents.js') }}"></script>
+
+</body>
+</html>

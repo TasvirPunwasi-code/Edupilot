@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/verify.css') }}">
+<title>Verify OTP - EduPilot</title>
+
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Email Verification</h2>
+
+<p>
+Enter the 6-digit code sent to your email.
+</p>
+
+<input
+type="text"
+id="otp"
+maxlength="6"
+placeholder="000000"
+required autocomplete="off">
+
+<button onclick="verifyOTP()">
+
+Verify OTP
+
+</button>
+
+<button id="resend" onclick="resendOTP()">
+
+Resend OTP
+
+</button>
+
+<p id="message"></p>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/verify.js') }}"></script>
+
+</body>
+</html>

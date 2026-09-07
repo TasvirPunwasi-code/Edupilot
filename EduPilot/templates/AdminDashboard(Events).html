@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
+<title>Events - EduPilot</title>
+
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+    <div class="logo"></div>
+
+   
+
+    <nav>
+        <ul class="nav">
+            <li>
+                <a href="/admin/dashboard">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/admin/teachers">Teachers</a>
+            </li>
+
+            <li>
+                <a href="/admin/students">Students</a>
+            </li>
+
+            <li>
+                <a href="/admin/report-card">Reports</a>
+            </li>
+
+            <li>
+                <a href="/admin/events">Events</a>
+            </li>
+
+            <li>
+                <a href="/admin/system-backup">Backup</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <button class="logout" onclick="window.location.href='/logout'">Logout</button>
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main-content">
+
+
+    <!-- TOP HEADER -->
+
+    <header class="top-header">
+
+        <div>
+
+            <h1>
+                Events Management
+            </h1>
+
+            <p>
+                Manage school events and activities
+            </p>
+
+        </div>
+
+
+        <div class="admin-profile">
+
+            <button
+                class="notification"
+                onclick="showNotifications()">
+
+                🔔
+
+                <span class="notification-count"></span>
+
+            </button>
+
+
+            <div class="profile">
+
+                <div class="profile-picture">
+                    A
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <small>
+                        Administrator
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div>
+
+            <h2>
+                School Events
+            </h2>
+
+            <p>
+                View and manage upcoming school events.
+            </p>
+
+        </div>
+
+
+        <button
+            class="add-event-btn"
+            onclick="openModal()">
+
+            + Add Event
+
+        </button>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         STATISTICS
+    ====================================================== -->
+
+    <section class="event-stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon teal">
+                📅
+            </div>
+
+
+            <div>
+
+                <p>
+                    Upcoming Events
+                </p>
+
+                <h3 id="upcomingCount">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon green">
+                📌
+            </div>
+
+
+            <div>
+
+                <p>
+                    This Month
+                </p>
+
+                <h3 id="monthCount">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon orange">
+                🎯
+            </div>
+
+
+            <div>
+
+                <p>
+                    Total Events
+                </p>
+
+                <h3 id="totalCount">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         SEARCH AND FILTERS
+    ====================================================== -->
+
+    <section class="filter-section">
+
+
+        <div class="search-box">
+
+            <span>
+                🔍
+            </span>
+
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search events...">
+
+        </div>
+
+
+
+        <select id="typeFilter">
+
+            <option value="all">
+                All Event Types
+            </option>
+
+            <option value="Academic">
+                Academic
+            </option>
+
+            <option value="Sports">
+                Sports
+            </option>
+
+            <option value="Meeting">
+                Meeting
+            </option>
+
+            <option value="Social">
+                Social
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+
+
+        <select id="statusFilter">
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="Upcoming">
+                Upcoming
+            </option>
+
+            <option value="Ongoing">
+                Ongoing
+            </option>
+
+            <option value="Completed">
+                Completed
+            </option>
+
+        </select>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         EVENTS TABLE
+    ====================================================== -->
+
+    <section class="events-container">
+
+
+        <div class="table-header">
+
+            <div>
+
+                <h2>
+                    Event List
+                </h2>
+
+                <p>
+                    All school events
+                </p>
+
+            </div>
+
+
+            <button
+                class="print-btn"
+                onclick="window.print()">
+
+                🖨 Print
+
+            </button>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Event
+                        </th>
+
+                        <th>
+                            Type
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Venue
+                        </th>
+
+                        <th>
+                            Organizer
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="eventTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     ADD EVENT MODAL
+========================================================= -->
+
+<div
+    class="modal"
+    id="eventModal">
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Add New Event
+            </h2>
+
+
+            <button onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="eventForm">
+
+
+            <div class="form-group">
+
+                <label>
+                    Event Name
+                </label>
+
+
+                <input
+                    type="text"
+                    id="eventName"
+                    placeholder="Enter event name"
+                    required>
+
+            </div>
+
+
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Event Type
+                    </label>
+
+
+                    <select
+                        id="eventType"
+                        required>
+
+                        <option value="">
+                            Select Type
+                        </option>
+
+                        <option value="Academic">
+                            Academic
+                        </option>
+
+                        <option value="Sports">
+                            Sports
+                        </option>
+
+                        <option value="Meeting">
+                            Meeting
+                        </option>
+
+                        <option value="Social">
+                            Social
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Date
+                    </label>
+
+
+                    <input
+                        type="date"
+                        id="eventDate"
+                        required>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="form-row">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Time
+                    </label>
+
+
+                    <input
+                        type="time"
+                        id="eventTime"
+                        required>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>
+                        Venue
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="eventVenue"
+                        placeholder="e.g. School Hall"
+                        required>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="form-group">
+
+                <label>
+                    Organizer
+                </label>
+
+
+                <input
+                    type="text"
+                    id="eventOrganizer"
+                    placeholder="Enter organizer"
+                    required>
+
+            </div>
+
+
+
+            <div class="modal-buttons">
+
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeModal()">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="save-btn">
+
+                    Save Event
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/events.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+
+        @page{
+            size:A4;
+            margin:20mm;
+        }
+
+        body{
+            font-family:Arial, Helvetica, sans-serif;
+            color:#222;
+            font-size:13px;
+        }
+
+        .header{
+            text-align:center;
+            border-bottom:3px solid teal;
+            padding-bottom:15px;
+            margin-bottom:25px;
+        }
+
+        .header h1{
+            margin:0;
+            color:teal;
+            font-size:28px;
+        }
+
+        .header h2{
+            margin:8px 0 0;
+        }
+
+        .student-info{
+            width:100%;
+            margin-bottom:25px;
+        }
+
+        .student-info td{
+            padding:7px;
+        }
+
+        .label{
+            font-weight:bold;
+        }
+
+        .marks-table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:15px;
+        }
+
+        .marks-table th{
+            background:teal;
+            color:white;
+            padding:10px;
+            border:1px solid #ccc;
+        }
+
+        .marks-table td{
+            padding:10px;
+            border:1px solid #ccc;
+            text-align:center;
+        }
+
+        .marks-table td:first-child{
+            text-align:left;
+        }
+
+        .overall{
+            margin-top:20px;
+            font-size:16px;
+            font-weight:bold;
+        }
+
+        .comments{
+            margin-top:30px;
+        }
+
+        .comments h3{
+            margin-bottom:15px;
+        }
+
+        .comment-line{
+            height:32px;
+            border-bottom:1px solid #777;
+        }
+
+        .signature-section{
+            margin-top:35px;
+            display:flex;
+            justify-content:space-between;
+            gap:40px;
+        }
+
+        .signature{
+            width:45%;
+        }
+
+        .signature-line{
+            height:35px;
+            border-bottom:1px solid #555;
+            margin-bottom:6px;
+        }
+
+        .generated-by{
+            margin-top:30px;
+            font-size:11px;
+            color:#666;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>EduPilot</h1>
+    <h2>Student Academic Report</h2>
+    <p>Term {{ report.term }}</p>
+</div>
+
+<table class="student-info">
+
+    <tr>
+        <td class="label">Student Name:</td>
+        <td>{{ report.student.student_name }}</td>
+
+        <td class="label">Student Number:</td>
+        <td>{{ report.student.student_number }}</td>
+    </tr>
+
+    <tr>
+        <td class="label">Grade:</td>
+        <td>{{ report.student.grade }}</td>
+
+        <td class="label">Class:</td>
+        <td>{{ report.student.class_name }}</td>
+    </tr>
+
+</table>
+
+<h3>Academic Results</h3>
+
+<table class="marks-table">
+
+    <thead>
+
+        <tr>
+            <th>Subject</th>
+            <th>Test 20%</th>
+            <th>Assignment 20%</th>
+            <th>Exam 60%</th>
+            <th>Final Mark</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for subject in report.subjects %}
+
+        <tr>
+
+            <td>{{ subject.subject_name }}</td>
+
+            <td>
+                {% if subject.test_average is not none %}
+                    {{ "%.2f"|format(subject.test_average) }}%
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+
+            <td>
+                {% if subject.assignment_average is not none %}
+                    {{ "%.2f"|format(subject.assignment_average) }}%
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+
+            <td>
+                {% if subject.exam_average is not none %}
+                    {{ "%.2f"|format(subject.exam_average) }}%
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+
+            <td>
+                {% if subject.final_mark is not none %}
+                    <strong>{{ "%.2f"|format(subject.final_mark) }}%</strong>
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+<div class="overall">
+
+    Overall Average:
+
+    {% if report.overall_average is not none %}
+        {{ "%.2f"|format(report.overall_average) }}%
+    {% else %}
+        N/A
+    {% endif %}
+
+</div>
+
+<div class="comments">
+
+    <h3>Teacher Comments</h3>
+
+    <div class="comment-line"></div>
+    <div class="comment-line"></div>
+    <div class="comment-line"></div>
+    <div class="comment-line"></div>
+
+</div>
+
+<div class="signature-section">
+
+    <div class="signature">
+        <div class="signature-line"></div>
+        <strong>Teacher Signature</strong>
+    </div>
+
+    <div class="signature">
+        <div class="signature-line"></div>
+        <strong>Date</strong>
+    </div>
+
+</div>
+
+<div class="generated-by">
+    Report generated through EduPilot by {{ admin_name }}.
+</div>
+
+</body>
+
+</html>

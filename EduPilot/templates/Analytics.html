@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Analytics - EduPilot Teacher</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Analytics.css') }}">
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="side">
+
+    <h2>EduPilot</h2>
+
+    <nav>
+        <ul>
+
+            <li>
+                <a href="/teacher/dashboard">Dashboard</a>
+            </li>
+
+            <li>
+                <a href="/teacher/capture-marks">Capture Marks</a>
+            </li>
+
+            <li>
+                <a href="/teacher/edit-marks">Edit Marks</a>
+            </li>
+
+            <li>
+                <a href="/teacher/students">View Students</a>
+            </li>
+
+            <li class="active">
+                <a href="/teacher/analytics">Analytics</a>
+            </li>
+
+            <li>
+                <a href="/teacher/chatbot">Chatbot</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <button class="logout" onclick="window.location.href='/logout'">
+        Logout
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main-content">
+
+    <!-- =================================================
+         TOP BAR
+    ================================================== -->
+
+    <header class="top-bar">
+
+        <div>
+
+            <h2>Welcome, {{ user_name }}</h2>
+
+            <p>
+                Analyse your students' academic performance
+            </p>
+
+        </div>
+
+        <div class="top-right">
+
+            <button class="notification">
+                🔔
+            </button>
+
+            <div class="profile">
+                👨‍🏫 {{ user_name }} - {{ user_role|capitalize }}
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+         PAGE TITLE
+    ================================================== -->
+
+    <div class="page-heading">
+
+        <h1>Analytics</h1>
+
+        <p>
+            Track academic performance using your assigned classes and subjects.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         FILTERS
+    ================================================== -->
+
+    <div class="analytics-section">
+
+        <div class="filters">
+
+            <div class="filter-group">
+
+                <label for="classFilter">
+                    Class
+                </label>
+
+                <select id="classFilter">
+
+                    <option value="">
+                        All My Classes
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="subjectFilter">
+                    Subject
+                </label>
+
+                <select id="subjectFilter">
+
+                    <option value="">
+                        All My Subjects
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <label for="termFilter">
+                    Term
+                </label>
+
+                <select id="termFilter">
+
+                    <option value="">
+                        All Terms
+                    </option>
+
+                    <option value="1">
+                        Term 1
+                    </option>
+
+                    <option value="2">
+                        Term 2
+                    </option>
+
+                    <option value="3">
+                        Term 3
+                    </option>
+
+                    <option value="4">
+                        Term 4
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👨‍🎓
+            </div>
+
+            <div>
+
+                <p>
+                    Students Analysed
+                </p>
+
+                <h2 id="totalStudents">
+                    0
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                📊
+            </div>
+
+            <div>
+
+                <p>
+                    Average Mark
+                </p>
+
+                <h2 id="averageMark">
+                    --
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🏆
+            </div>
+
+            <div>
+
+                <p>
+                    Highest Student Average
+                </p>
+
+                <h2 id="highestAverage">
+                    --
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <p>
+                    Students At Risk
+                </p>
+
+                <h2 id="atRisk">
+                    0
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         EXACTLY 4 MATPLOTLIB GRAPHS
+    ================================================== -->
+
+    <div class="chart-grid">
+
+
+        <!-- GRAPH 1 -->
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h2>
+                    Class Performance
+                </h2>
+
+                <p>
+                    Average marks by class
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+
+                <img
+                    id="classPerformanceGraph"
+                    alt="Class Performance Graph">
+
+            </div>
+
+        </div>
+
+
+        <!-- GRAPH 2 -->
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h2>
+                    Subject Performance
+                </h2>
+
+                <p>
+                    Average marks by subject
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+
+                <img
+                    id="subjectPerformanceGraph"
+                    alt="Subject Performance Graph">
+
+            </div>
+
+        </div>
+
+
+        <!-- GRAPH 3 -->
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h2>
+                    Assessment Performance
+                </h2>
+
+                <p>
+                    Average marks by assessment type
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+
+                <img
+                    id="assessmentPerformanceGraph"
+                    alt="Assessment Performance Graph">
+
+            </div>
+
+        </div>
+
+
+        <!-- GRAPH 4 -->
+
+        <div class="chart-card">
+
+            <div class="chart-header">
+
+                <h2>
+                    Student Performance Distribution
+                </h2>
+
+                <p>
+                    Number of students within each performance range
+                </p>
+
+            </div>
+
+            <div class="chart-container">
+
+                <img
+                    id="performanceDistributionGraph"
+                    alt="Student Performance Distribution Graph">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         STUDENTS REQUIRING ATTENTION
+    ================================================== -->
+
+    <div class="attention-section">
+
+        <div class="attention-header">
+
+            <div>
+
+                <h2>
+                    Students Requiring Attention
+                </h2>
+
+                <p>
+                    Students currently averaging below 50%
+                </p>
+
+            </div>
+
+            <span class="attention-count" id="attentionCount">
+                0 Students
+            </span>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Class
+                        </th>
+
+                        <th>
+                            Average Mark
+                        </th>
+
+                        <th>
+                            Risk Level
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="attentionTable">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='js/Analytics.js') }}"></script>
+
+</body>
+
+</html>
