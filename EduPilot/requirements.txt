@@ -1,7 +1,0 @@
-Flask
-mysql-connector-python
-matplotlib
-python-dotenv
-bcrypt
-Flask-Limiter
-requests
